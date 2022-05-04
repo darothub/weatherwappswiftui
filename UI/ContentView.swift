@@ -5,11 +5,11 @@
 //  Created by Darot on 26/04/2022.
 //
 
+import Combine
 import SwiftUI
 
 struct ContentView: View {
- 
-    @StateObject var vm = WeatherForecastViewModel(remoteDataManager: RemoteDataManager())
+    @EnvironmentObject var vm: WeatherForecastViewModel
     var body: some View {
         ScrollView{
             VStack(spacing: 0){
@@ -17,23 +17,11 @@ struct ContentView: View {
                 HourlyForecastView()
                 TenDaysForecastView()
             }
-           
+        }
             
-        }.ignoresSafeArea()
-            .background(
-                Image("cloud")
-                    .resizable()
-                    .scaledToFill()
-                    .background(Color.black)
-                    .edgesIgnoringSafeArea(.all)
-                    .opacity(0.3)
-            )
-            .environmentObject(vm)
-           
-            
-        
     }
-    
+
+
 }
 
 

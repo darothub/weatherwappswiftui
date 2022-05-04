@@ -8,22 +8,17 @@
 import Alamofire
 import Combine
 import Foundation
+import SwiftUI
 final class WeatherForecastViewModel : ObservableObject {
-    @Published var weatherResponse: WeatherResponse!
-    @Published var name: String = "name"
+    @Published var weatherResponse: WeatherResponse!    
     private var subscriptions = Set<AnyCancellable>()
     private let getWeatherForecast:GetWeatherForecast
     private let remoteDataManager: RemoteDataManager
-//    init(getWeatherForecast:GetWeatherForecast){
-//        self.getWeatherForecast = getWeatherForecast
-//        self.getWeatherForecasts(key:Constant.apikey, q: "Lagos", days:1)
-//    }
     
   
     init(remoteDataManager: RemoteDataManager){
         self.remoteDataManager = remoteDataManager
         self.getWeatherForecast = GetWeatherForecast(remoteDataManager: remoteDataManager)
-        getWeatherForecasts(key:Constant.apikey, q: "Lagos", days:1)
     }
     
     func getWeatherForecasts(key:String, q: String, days:Int){
@@ -39,10 +34,9 @@ final class WeatherForecastViewModel : ObservableObject {
                 }
                 
             } receiveValue: { [unowned self] data in
-                print("data \(data)")
+//                print("data \(data)")
                 if data.value != nil{
                     weatherResponse = data.value!
-                    name = "data is here"
                 }
                 
             }.store(in: &subscriptions)

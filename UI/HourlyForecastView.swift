@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct HourlyForecastView: View {
+    @EnvironmentObject var vm: WeatherForecastViewModel
     let listOfHoursItemColumn = [HoursItemColumn()]
     var body: some View {
         VStack(alignment:.leading, spacing: 0){
-            Text("Rainy condition bla bla")
+            Text(vm.weatherResponse?.current.condition.text ?? "")
                 .font(.body)
                 .padding()
                 .foregroundColor(Color.white)
@@ -19,9 +20,14 @@ struct HourlyForecastView: View {
                 .background(.white)
                 Spacer()
             ScrollView (.horizontal, showsIndicators: false) {
-                 HStack {
-                     ForEach(0..<4){ _ in
-                         HoursItemColumn()
+                HStack(spacing: 30) {
+                     ForEach(vm.weatherResponse?.forecast.forecastday.first?.hour ?? [Hour](), id: \.timeEpoch){ hour in
+                         let date = Date(timeIntervalSince1970: TimeInterval(hour.timeEpoch))
+                         let theHour = convertTimeIntervalToHour(epochTime: date)
+                         let currentHour = convertTimeIntervalToHour(epochTime: Date())
+                         if theHour >= currentHour {
+                             HoursItemColumn(dayNum:"\(theHour)", temp: "\(hour.tempC)", imageUrl:hour.condition.icon)
+                         }
                      }
                  }
                  .padding()

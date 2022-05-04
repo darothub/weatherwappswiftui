@@ -4,14 +4,16 @@
 //
 //  Created by Darot on 27/04/2022.
 //
-
+import Combine
 import SwiftUI
 
 struct CurrentWeatherInfoView: View {
     @EnvironmentObject var vm: WeatherForecastViewModel
+
     let country:String = "Kenya"
     let temp:String = "15"
     let weatherInfo:String = "Mostly cloudy"
+ 
     var body: some View {
         VStack{
             Text(vm.weatherResponse?.location.name ?? "default value" )
@@ -26,6 +28,7 @@ struct CurrentWeatherInfoView: View {
                 .font(.title2)
         }
     }
+    
 }
 
 struct CurrentWeatherInfoView_Previews: PreviewProvider {

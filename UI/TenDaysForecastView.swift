@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TenDaysForecastView: View {
+    @EnvironmentObject var vm: WeatherForecastViewModel
     var body: some View {
         VStack(alignment:.leading, spacing: 0){
             HStack{
@@ -17,14 +18,11 @@ struct TenDaysForecastView: View {
                     .foregroundColor(Color.white)
             }.padding()
 
-            ForEach(0..<3){ _ in
-                ForecastItem()
+            ForEach(vm.weatherResponse?.forecast.forecastday ?? [Forecastday](), id: \.day.condition.code){ forecastday in
+                let forecastdate = Date(timeIntervalSince1970: TimeInterval(forecastday.dateEpoch))
+                let dayOfTheWeekName = convertTimeIntervalToWeekdayName(epochTime: forecastdate)
+                ForecastItem(dayOfTheWeek: dayOfTheWeekName, imageUrl: forecastday.day.condition.icon, temp: "\(forecastday.day.avgtempC)")
                      .listRowBackground(Color.clear)
-                ForecastItem()
-                     .listRowBackground(Color.clear)
-                ForecastItem()
-                     .listRowBackground(Color.clear)
-                
             }.padding(.horizontal)
     
         }
