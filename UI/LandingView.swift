@@ -13,6 +13,7 @@ struct LandingView: View {
     @StateObject var lm: LocationManager = LocationManager.shared
     @State var locality:String = "Kenya"
     @State var tokens: Set<AnyCancellable> = []
+    var imageUrl = "//cdn.weatherapi.com/weather/64x64/day/176.png"
     var body: some View {
         NavigationView{
             TabView {
@@ -28,12 +29,20 @@ struct LandingView: View {
             .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
             .ignoresSafeArea()
             .background(
-                Image("cloud")
-                    .resizable()
-                    .scaledToFill()
-                    .background(Color.black)
-                    .edgesIgnoringSafeArea(.all)
-                    .opacity(0.5)
+                AsyncImage(url: URL(string:"https:"+(vm.weatherResponse?.current.condition.icon ?? imageUrl))) { image in
+                    image.resizable()
+                        .scaledToFill()
+                        .background(Color.black)
+                        .edgesIgnoringSafeArea(.all)
+                        .opacity(0.5)
+                } placeholder: {
+                    Image("cloud")
+                        .resizable()
+                        .scaledToFill()
+                        .background(Color.black)
+                        .edgesIgnoringSafeArea(.all)
+                        .opacity(0.5)
+                }
             ).navigationBarTitleDisplayMode(.inline)
                 
             
