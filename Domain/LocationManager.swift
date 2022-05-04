@@ -13,7 +13,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var location: CLLocation?
     @Published var region: MKCoordinateRegion = MKCoordinateRegion.defaultRegion()
     @Published var locality:String = "Kenya"
-    var locationPublisher = PassthroughSubject<String, Error>()
+//    var locationPublisher = PassthroughSubject<String, Error>()
     let geocoder = CLGeocoder()
     
     static let shared = LocationManager()
@@ -52,7 +52,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             if let city = placeMark.locality {
                 print(city)
                 locality = city
-                locationPublisher.send(city)
+//                locationPublisher.send(city)
             }
             
         })

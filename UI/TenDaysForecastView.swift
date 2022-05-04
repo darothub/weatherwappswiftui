@@ -18,7 +18,7 @@ struct TenDaysForecastView: View {
                     .foregroundColor(Color.white)
             }.padding()
 
-            ForEach(vm.weatherResponse?.forecast.forecastday ?? [Forecastday](), id: \.day.condition.code){ forecastday in
+            ForEach(vm.weatherResponse?.forecast.forecastday ?? [Forecastday](), id: \.hour.first?.timeEpoch){ forecastday in
                 let forecastdate = Date(timeIntervalSince1970: TimeInterval(forecastday.dateEpoch))
                 let dayOfTheWeekName = convertTimeIntervalToWeekdayName(epochTime: forecastdate)
                 ForecastItem(dayOfTheWeek: dayOfTheWeekName, imageUrl: forecastday.day.condition.icon, temp: "\(forecastday.day.avgtempC)")
@@ -26,7 +26,6 @@ struct TenDaysForecastView: View {
             }.padding(.horizontal)
     
         }
-
         .frame(maxWidth: .infinity)
         .background(Color.black)
         .opacity(0.5)

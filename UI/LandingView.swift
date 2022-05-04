@@ -24,6 +24,13 @@ struct LandingView: View {
                             getWeatherForecast(for: str)
                         }
                     }
+                ContentView()
+                    .searchable(text: $str)
+                    .onSubmit(of: .search) {
+                        if !str.isEmpty {
+                            getWeatherForecast(for: str)
+                        }
+                    }
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
             .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
@@ -57,16 +64,27 @@ struct LandingView: View {
         
     }
     func observeCoordinateUpdates() {
-        lm.locationPublisher
+        lm.$locality
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 print("Handle \(completion) for error and finished subscription.")
             } receiveValue: { locality in
                 self.locality = locality
-                print("locality \(lm.locality)")
+                print("locality1 \(locality)")
                 getWeatherForecast(for: locality)
             }
             .store(in: &tokens)
+//        print("Locality \(str)")
+//        lm.locationPublisher
+//            .receive(on: DispatchQueue.main)
+//            .sink { completion in
+//                print("Handle \(completion) for error and finished subscription.")
+//            } receiveValue: { locality in
+//                self.locality = locality
+//                print("locality2 \(lm.locality)")
+//                getWeatherForecast(for: locality)
+//            }
+//            .store(in: &tokens)
     }
     func getWeatherForecast(for locality:String) {
         vm.getWeatherForecasts(key:Constant.apikey, q:locality , days:7)
