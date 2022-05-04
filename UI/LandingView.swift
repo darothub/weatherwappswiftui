@@ -9,26 +9,18 @@ import SwiftUI
 
 struct LandingView: View {
     @StateObject var vm = WeatherForecastViewModel(remoteDataManager: RemoteDataManager())
-    @State var str = "Location"
     @StateObject var lm: LocationManager = LocationManager.shared
-    @State var locality:String = "Kenya"
+    @State var locality:String = ""
     @State var tokens: Set<AnyCancellable> = []
     var imageUrl = "//cdn.weatherapi.com/weather/64x64/day/176.png"
     var body: some View {
         NavigationView{
             TabView {
                 ContentView()
-                    .searchable(text: $str)
+                    .searchable(text: $locality)
                     .onSubmit(of: .search) {
-                        if !str.isEmpty {
-                            getWeatherForecast(for: str)
-                        }
-                    }
-                ContentView()
-                    .searchable(text: $str)
-                    .onSubmit(of: .search) {
-                        if !str.isEmpty {
-                            getWeatherForecast(for: str)
+                        if !locality.isEmpty {
+                            getWeatherForecast(for: $locality)
                         }
                     }
             }
@@ -66,14 +58,15 @@ struct LandingView: View {
     func observeCoordinateUpdates() {
         lm.$locality
             .receive(on: DispatchQueue.main)
-            .sink { completion in
+            .sink{completion in
                 print("Handle \(completion) for error and finished subscription.")
             } receiveValue: { locality in
                 self.locality = locality
-                print("locality1 \(locality)")
-                getWeatherForecast(for: locality)
+                getWeatherForecast(for: $locality)
             }
             .store(in: &tokens)
+        
+      
 //        print("Locality \(str)")
 //        lm.locationPublisher
 //            .receive(on: DispatchQueue.main)
@@ -86,8 +79,9 @@ struct LandingView: View {
 //            }
 //            .store(in: &tokens)
     }
-    func getWeatherForecast(for locality:String) {
-        vm.getWeatherForecasts(key:Constant.apikey, q:locality , days:7)
+    func getWeatherForecast(for locality:Binding<String>) {
+        print("Loc \(locality.wrappedValue)")
+        vm.getWeatherForecasts(key:Constant.apikey, q:locality.wrappedValue , days:7)
     }
     
 }

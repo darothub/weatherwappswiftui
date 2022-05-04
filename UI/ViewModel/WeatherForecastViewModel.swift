@@ -10,7 +10,8 @@ import Combine
 import Foundation
 import SwiftUI
 final class WeatherForecastViewModel : ObservableObject {
-    @Published var weatherResponse: WeatherResponse!    
+    @Published var weatherResponse: WeatherResponse!
+    @State var locality = ""
     private var subscriptions = Set<AnyCancellable>()
     private let getWeatherForecast:GetWeatherForecast
     private let remoteDataManager: RemoteDataManager

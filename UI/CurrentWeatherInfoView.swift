@@ -9,14 +9,9 @@ import SwiftUI
 
 struct CurrentWeatherInfoView: View {
     @EnvironmentObject var vm: WeatherForecastViewModel
-
-    let country:String = "Kenya"
-    let temp:String = "15"
-    let weatherInfo:String = "Mostly cloudy"
- 
     var body: some View {
         VStack{
-            Text(vm.weatherResponse?.location.name ?? "default value" )
+            Text(vm.weatherResponse?.location.name ?? "..." )
                 .font(.title)
                 .padding(EdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 0))
             Text(String(format: "%.1f", vm.weatherResponse?.current.tempC ?? 0))
