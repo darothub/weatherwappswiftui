@@ -20,13 +20,17 @@ struct LandingView: View {
                     .searchable(text: $locality)
                     .onSubmit(of: .search) {
                         if !locality.isEmpty {
-                            getWeatherForecast(for: $locality)
+                            withAnimation(.easeIn) {
+                                getWeatherForecast(for: $locality)
+                            }
+                          
                         }
                     }
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
             .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
             .ignoresSafeArea()
+            .navigationBarTitleDisplayMode(.inline)
             .background(
                 AsyncImage(url: URL(string:"https:"+(vm.weatherResponse?.current.condition.icon ?? imageUrl))) { image in
                     image.resizable()
@@ -42,16 +46,15 @@ struct LandingView: View {
                         .edgesIgnoringSafeArea(.all)
                         .opacity(0.5)
                 }
-            ).navigationBarTitleDisplayMode(.inline)
+            )
+            .task {
+                withAnimation(.easeIn) {
+                    observeCoordinateUpdates()
+                }
+               
+            }
                 
-            
-            
-            
-        }
-        .onAppear{
-            observeCoordinateUpdates()
-        }
-        .environmentObject(vm)
+        }.environmentObject(vm)
         
         
     }
@@ -65,23 +68,10 @@ struct LandingView: View {
                 getWeatherForecast(for: $locality)
             }
             .store(in: &tokens)
-        
-      
-//        print("Locality \(str)")
-//        lm.locationPublisher
-//            .receive(on: DispatchQueue.main)
-//            .sink { completion in
-//                print("Handle \(completion) for error and finished subscription.")
-//            } receiveValue: { locality in
-//                self.locality = locality
-//                print("locality2 \(lm.locality)")
-//                getWeatherForecast(for: locality)
-//            }
-//            .store(in: &tokens)
     }
     func getWeatherForecast(for locality:Binding<String>) {
-        print("Loc \(locality.wrappedValue)")
-        vm.getWeatherForecasts(key:Constant.apikey, q:locality.wrappedValue , days:7)
+//        print("Loc \(locality.wrappedValue)")
+        vm.getWeatherForecasts(q:locality.wrappedValue , days:4)
     }
     
 }

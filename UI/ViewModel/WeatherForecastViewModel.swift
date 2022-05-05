@@ -11,6 +11,7 @@ import Foundation
 import SwiftUI
 final class WeatherForecastViewModel : ObservableObject {
     @Published var weatherResponse: WeatherResponse!
+    @Published var stateData: UIModel = UIModel.loading
     @State var locality = ""
     private var subscriptions = Set<AnyCancellable>()
     private let getWeatherForecast:GetWeatherForecast
@@ -22,10 +23,11 @@ final class WeatherForecastViewModel : ObservableObject {
         self.getWeatherForecast = GetWeatherForecast(remoteDataManager: remoteDataManager)
     }
     
-    func getWeatherForecasts(key:String, q: String, days:Int){
-        let dataRequest = getWeatherForecast.getWeatherData(key: key, q: q, days: days)
+    func getWeatherForecasts(q: String, days:Int){
+        let dataRequest = getWeatherForecast.getWeatherData(q: q, days: days)
         dataRequest.publishDecodable(type: WeatherResponse.self)
             .receive(on: DispatchQueue.main)
+
             .sink{completion in
                 switch completion {
                 case .finished:
@@ -35,11 +37,15 @@ final class WeatherForecastViewModel : ObservableObject {
                 }
                 
             } receiveValue: { [unowned self] data in
-//                print("data \(data)")
                 if data.value != nil{
                     weatherResponse = data.value!
+                    let ui = UIModel.content(UIModel.ContentViewModel(weatherforecast: weatherResponse))
+                    stateData = ui
                 }
                 
-            }.store(in: &subscriptions)
+            }
+        
+            .store(in: &subscriptions)
+        
     }
 }

@@ -14,7 +14,7 @@ class GetWeatherForecast {
         self.remoteDataManager = remoteDataManager
     }
     
-    func getWeatherData(key:String, q: String, days:Int) -> DataRequest{
-        return remoteDataManager.fetchWeatherForecast(key: key, in: q, for: days)
+    func getWeatherData(q: String, days:Int) -> DataRequest{
+        return remoteDataManager.fetchWeatherForecast(in: q, for: days)
     }
 }

@@ -6,15 +6,20 @@
 //
 
 import Foundation
+import SwiftUI
 enum UIModel {
 
-     struct Content {
-         let weatherforecast: WeatherResponse
-     }
+    class ContentViewModel : ObservableObject {
+        @Published var weatherforecast: WeatherResponse
+        init(weatherforecast: WeatherResponse){
+            self.weatherforecast = weatherforecast
+        }
+        
+    }
 
-     case loading
-     case content(Content)
-     case error(String)
+    case loading
+    case content(ContentViewModel)
+    case error(String)
 }
 
 

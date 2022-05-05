@@ -8,18 +8,19 @@ import Combine
 import SwiftUI
 
 struct CurrentWeatherInfoView: View {
-    @EnvironmentObject var vm: WeatherForecastViewModel
+    @EnvironmentObject var content: UIModel.ContentViewModel
     var body: some View {
         VStack{
-            Text(vm.weatherResponse?.location.name ?? "..." )
+            Text(content.weatherforecast.location.name)
                 .font(.title)
                 .padding(EdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 0))
-            Text(String(format: "%.1f", vm.weatherResponse?.current.tempC ?? 0))
+              
+            Text(String(format: "%.1f", content.weatherforecast.current.tempC))
                 .font(.system(size: 100))
             + Text("O")
                 .font(.title)
                 .baselineOffset(100/2)
-            Text(vm.weatherResponse?.current.condition.text ?? "cool")
+            Text(content.weatherforecast.current.condition.text)
                 .font(.title2)
         }
     }

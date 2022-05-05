@@ -7,7 +7,7 @@
 import Alamofire
 import Foundation
 class RemoteDataManager : ApiServices{    
-    func fetchWeatherForecast(key:String, in q: String, for days:Int) -> DataRequest{
+    func fetchWeatherForecast(in q: String, for days:Int) -> DataRequest{
         let parameters:[String: Any] = [
             "key" : Constant.apikey,
             "q" : q,

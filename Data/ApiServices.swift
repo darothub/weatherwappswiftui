@@ -7,7 +7,7 @@
 import Alamofire
 import Foundation
 protocol ApiServices {
-    func fetchWeatherForecast(key:String, in q: String,  for days:Int) -> DataRequest
+    func fetchWeatherForecast(in q: String,  for days:Int) -> DataRequest
 }
 
 
