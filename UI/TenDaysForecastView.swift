@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TenDaysForecastView: View {
-    @EnvironmentObject var content: UIModel.ContentViewModel
+    @EnvironmentObject private var content: UIModel.ContentViewModel
     var body: some View {
         VStack(alignment:.leading, spacing: 0){
             HStack{

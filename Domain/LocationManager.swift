@@ -11,9 +11,7 @@ import Combine
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     @Published var location: CLLocation?
-    @Published var region: MKCoordinateRegion = MKCoordinateRegion.defaultRegion()
     @Published var locality:String = "..."
-//    var locationPublisher = PassthroughSubject<String, Error>()
     let geocoder = CLGeocoder()
     
     static let shared = LocationManager()
@@ -50,9 +48,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             placeMark = placemarks?[0]
             // City
             if let city = placeMark.locality {
-//                print(city)
                 locality = city
-//                locationPublisher.send(city)
             }
             
         })
@@ -61,11 +57,3 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
 }
 
-
-extension MKCoordinateRegion {
-    
-    static func defaultRegion() -> MKCoordinateRegion {
-        MKCoordinateRegion(center: CLLocationCoordinate2D.init(latitude: 29.726819, longitude: -95.393692), latitudinalMeters: 100, longitudinalMeters: 100)
-    }
-    
-}

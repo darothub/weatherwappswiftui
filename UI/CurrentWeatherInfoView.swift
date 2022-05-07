@@ -8,7 +8,7 @@ import Combine
 import SwiftUI
 
 struct CurrentWeatherInfoView: View {
-    @EnvironmentObject var content: UIModel.ContentViewModel
+    @EnvironmentObject private var content: UIModel.ContentViewModel
     var body: some View {
         VStack{
             Text(content.weatherforecast.location.name)

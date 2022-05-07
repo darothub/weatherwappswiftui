@@ -16,4 +16,6 @@ class RemoteWeatherRepo {
     func getWeatherData(q: String, days:Int) -> DataRequest{
         return remoteDataManager.fetchWeatherForecast(in: q, for: days)
     }
+
+    
 }

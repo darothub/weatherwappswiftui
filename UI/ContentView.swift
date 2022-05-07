@@ -9,7 +9,7 @@ import Combine
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var vm: WeatherForecastViewModel
+    @StateObject var vm: WeatherForecastViewModel
     var body: some View {
         switch vm.stateData {
         case .loading:
@@ -35,6 +35,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(vm: Dependencies.createWFVM())
     }
 }

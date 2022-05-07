@@ -9,11 +9,11 @@ import Foundation
 class RemoteDataManager : ApiServices{    
     func fetchWeatherForecast(in q: String, for days:Int) -> DataRequest{
         let parameters:[String: Any] = [
-            "key" : Constant.apikey,
+            "key" : Constants.apikey,
             "q" : q,
             "days" : days
         ]
-        let request = AF.request(Constant.baseUrl, method: .get, parameters: parameters)
+        let request = AF.request(Constants.baseUrl, method: .get, parameters: parameters)
         return request
     }
 }

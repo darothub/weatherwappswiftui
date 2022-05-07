@@ -12,19 +12,18 @@ import SwiftUI
 final class WeatherForecastViewModel : ObservableObject {
     @Published var weatherResponse: WeatherResponse!
     @Published var stateData: UIModel = UIModel.loading
-    @State var locality = ""
+    @Published var locality = "..."
     private var subscriptions = Set<AnyCancellable>()
-    private let getWeatherForecast:GetWeatherForecast
-    private let remoteDataManager: RemoteDataManager
+    private let dataManager: DataManager
     
   
-    init(remoteDataManager: RemoteDataManager){
-        self.remoteDataManager = remoteDataManager
-        self.getWeatherForecast = GetWeatherForecast(remoteDataManager: remoteDataManager)
+    init(dataManager: DataManager){
+        self.dataManager = dataManager
+        getDefaultLocation()
     }
     
     func getWeatherForecasts(q: String, days:Int){
-        let dataRequest = getWeatherForecast.getWeatherData(q: q, days: days)
+        let dataRequest = dataManager.remoteWeatherRepo.getWeatherData(q: q, days: days)
         dataRequest.publishDecodable(type: WeatherResponse.self)
             .receive(on: DispatchQueue.main)
 
@@ -47,5 +46,16 @@ final class WeatherForecastViewModel : ObservableObject {
         
             .store(in: &subscriptions)
         
+    }
+    
+    func getDefaultLocation(){
+        self.dataManager.locationManager.$locality
+            .receive(on: DispatchQueue.main)
+            .sink{completion in
+                print("Handle \(completion) for error and finished subscription.")
+            } receiveValue: { locality in
+                self.locality = locality
+            }
+            .store(in: &subscriptions)
     }
 }

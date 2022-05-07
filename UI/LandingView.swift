@@ -8,15 +8,14 @@ import Combine
 import SwiftUI
 
 struct LandingView: View {
-    @StateObject var vm = WeatherForecastViewModel(remoteDataManager: RemoteDataManager())
-    @StateObject var lm: LocationManager = LocationManager.shared
+    @StateObject var vm = Dependencies.createWFVM()
     @State var locality:String = ""
     @State var tokens: Set<AnyCancellable> = []
-    var imageUrl = "//cdn.weatherapi.com/weather/64x64/day/176.png"
+    var imageUrl = Constants.imagePlaceHolderUrl
     var body: some View {
         NavigationView{
             TabView {
-                ContentView()
+                ContentView(vm: vm)
                     .searchable(text: $locality)
                     .onSubmit(of: .search) {
                         if !locality.isEmpty {
@@ -59,7 +58,7 @@ struct LandingView: View {
         
     }
     func observeCoordinateUpdates() {
-        lm.$locality
+        vm.$locality
             .receive(on: DispatchQueue.main)
             .sink{completion in
                 print("Handle \(completion) for error and finished subscription.")

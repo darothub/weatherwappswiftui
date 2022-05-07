@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HourlyForecastView: View {
-    @EnvironmentObject var content: UIModel.ContentViewModel
+    @EnvironmentObject private var content: UIModel.ContentViewModel
     let listOfHoursItemColumn = [HoursItemColumn()]
     var body: some View {
         VStack(alignment:.leading, spacing: 0){
