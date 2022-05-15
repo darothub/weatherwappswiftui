@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:../DDModules/DDModules.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:../TendaysForecastView/TendaysForecastView.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:../HourlyWeatherView/HourlyWeatherView.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:../CurrentWeatherView/CurrentWeatherView.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "container:WeatherApp.xcodeproj">
+   </FileRef>
+</Workspace>

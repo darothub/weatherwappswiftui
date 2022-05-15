@@ -1,0 +1,34 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Alamofire",
+        "repositoryURL": "https://github.com/Alamofire/Alamofire.git",
+        "state": {
+          "branch": "master",
+          "revision": "bbac4d93605034b1dcfb1fcb32bd8d8e38751783",
+          "version": null
+        }
+      },
+      {
+        "package": "RealmDatabase",
+        "repositoryURL": "https://github.com/realm/realm-core",
+        "state": {
+          "branch": null,
+          "revision": "472d325a2e844fcb48c400db74e6b9646f92ca93",
+          "version": "11.15.0"
+        }
+      },
+      {
+        "package": "Realm",
+        "repositoryURL": "https://github.com/realm/realm-swift.git",
+        "state": {
+          "branch": "master",
+          "revision": "3a7dee88f5731b11c746fe222141ad8d1597bb9e",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
